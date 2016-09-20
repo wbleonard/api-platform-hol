@@ -1,80 +1,52 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://apics.oracle.com:8001/
 
 # Energy
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Gives a real time current month's usage of Gas and Electricity Services. Also gives an estimate of the next billing cycle's usage.
 
-## Questions Collection [/questions]
 
-### List All Questions [GET]
+
+## Usage [/usage/current/month/{accountNumber}]
+
+### Current Month [GET]
+Returns current month's usage information for the provided customer id.
+
++ Parameters
+    + accountNumber: 4859634 (number) - Customer's account number.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
+        
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "account_number": "4859634",
+            "name": "Darko",
+            "gas_usage": "20,006 Btu",
+            "gas_cost": "¥ 46,896",
+            "electricity_usage": "3,430 kW",
+            "electricity_cost": "¥ 12,932",
+            "environment": "Japan 1",
+            "serviceID": "7777"
         }
 
-+ Response 201 (application/json)
+## Estimate [/estimate/{accountNumber}]
 
-    + Headers
+### Estimate [GET]
+Returns an estimate of next month's usage information for the provided customer account number.
 
-            Location: /questions/2
++ Parameters
+    + accountNumber: 4859634 (number) - Customer's account number.
 
-    + Body
 
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
++ Response 200 (application/json)
+
+        {
+            "account_number": "4859634",
+            "name": "Darko",
+            "gas_estimate_usage": "32,000 Btu",
+            "gas_estimate_cost": "¥ 46,896",
+            "electricity_estimate_usage": "3,430 kW",
+            "electricity_estimate_cost": "¥ 12,932",
+            "environment": "Japan 1",
+            "serviceID": "7777"
+        }
